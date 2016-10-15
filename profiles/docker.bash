@@ -13,7 +13,7 @@ function set-mail-shortcuts {
 }
 
 function highland_dev {
-    docker run --rm -it --net host -v /var/run/docker.sock:/var/run/docker.sock --privileged -v ~/.gnupg-root:/root/.gpg -v ~/.dockercfg:/root/.dockercfg -v ~/src/github.com/docker-infra/pass-store:/root/.password-store -v ~/src/github.com/docker/highland/:/highland/ -v ~/src/github.com/docker/saas-mega/:/saas-mega/ -v /Users/rabrams:/rabrams highland_dev
+    docker run --rm -it --net host -v /var/run/docker.sock:/var/run/docker.sock --privileged -v ~/.gnupg-root:/root/.gpg -v ~/.dockercfg:/root/.dockercfg -v ~/src/github.com/docker-infra/pass-store:/root/.password-store -v ~/src/github.com/docker/highland/:/highland/ -v ~/src/github.com/docker/saas-mega/:/saas-mega/ -v /Users/rabrams:/rabrams -v ~/src/github.com/docker-infra/docker-ca:/dockerca highland_dev
 }
 
 function prod-ak {
