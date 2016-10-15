@@ -134,6 +134,7 @@ alias blender='~/Downloads/Blender/blender.app/Contents/MacOS/blender'
 
 function bootstrap {
     ln -s ~/src/github.com//caervs/personal/profiles/emacs.el ~/.emacs
+    ln -s ~/src/github.com//caervs/personal/profiles/xonshrc.py ~/.xonshrc
 }
 
 alias euler_env='cd ~/src/github.com//caervs/miniprojects; . ./project-euler/activate'
@@ -148,3 +149,5 @@ function trackit-env {
     export TRACKIT_CHANNEL="#hackyducks"
     export TRACKIT_PUBLIC_ENDPOINT="https://trackit.ulmenhaus.com"
 }
+
+#alias br-clean="git branch -dq $(git branch | grep -v '^\*') 2>&1 | grep '^error: ' | sed 's/^error: //'"
