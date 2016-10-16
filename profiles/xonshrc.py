@@ -13,6 +13,7 @@ GH_ALIAS = "caervs"
 pass_stores = {
     "personal": os.path.join(GH, GH_ALIAS, "private", "password-store"),
     "docker": os.path.join(GH, "docker-infra", "pass-store"),
+    "uhaus": os.path.join(GH, "ulmenhaus", "private", "password-store"),
 }
 
 reverse_pass_stores = {value: key for key, value in pass_stores.items()}
@@ -67,6 +68,30 @@ def docker_machine_env(args, stdin=None):
     ENV["DOCKER_MACHINE"] = name
 
 
+def pass_complete(prefix, line, begidx, endidx, ctx):
+    if not line.startswith("pass"):
+        return
+
+    if "PASSWORD_STORE_DIR" not in ENV:
+        return {"No pass context", ""}
+
+    parts = os.path.split(prefix)
+    path_so_far = os.path.join(*parts[:-1])
+    subdir = os.path.join(ENV["PASSWORD_STORE_DIR"], path_so_far)
+    all_files = os.listdir(subdir)
+    process_filename = lambda filename : os.path.join(filename, "") \
+                       if not filename.endswith(".gpg") \
+                       else filename[:-4]
+    is_match = lambda filename: filename.startswith(parts[-1])
+    completions = map(process_filename, filter(is_match, all_files))
+    return {os.path.join(path_so_far, completion)
+            for completion in completions}
+
+
+aliases['set_completers'] = "completer add pass pass_complete start"
+
 aliases['pc'] = pass_context
 aliases['dm'] = docker_machine_env
+aliases['src'] = "cd ~/src/github.com/"
 clear
+set_completers
